@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+    
+    <form class="formulario" action="" id="listo">
+
+        <h1>Login</h1>
+        <div class="contenedor">
+
+
+
+            <div class="input-contenedor">
+                <i class="fas fa-envelope icon"></i>
+                <input type="text" placeholder="Correo Electronico" id="Correo">
+
+            </div>
+
+            <div class="input-contenedor">
+                <i class="fas fa-key icon"></i>
+                <input type="password" placeholder="Contraseña" id="Contra">
+
+            </div>
+            <div id="aqui">
+
+            </div>
+            <input type="submit" value="Login" class="button">
+            <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+            <p>¿No tienes una cuenta? <a class="link" href="registrarvista.php">Registrate </a></p>
+        </div>
+    </form>
+
+    <script>
+         console.log("si")
+        $(document).ready(function () {
+            $("#listo").submit(function () {
+                console.log("aaa")
+                var mail = document.getElementById("Correo").value;
+                var pass = document.getElementById("Contra").value;
+
+                var parametros = {
+                    "contra": pass,
+                    "correo": mail
+                };
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: 'login.php',
+                    data: parametros
+
+                }).done(function (response) {
+                    if (response === 'ok') {
+                        window.location = 'After_login.php';
+                    } else {
+                        $("#aqui").html('<div class="alert alert-danger">Error: Contraseña o correo incorrecto(s)</div>');
+                    }
+                    return false;
+
+                }).fail(function () {
+                    $("#aqui").html('<div class="alert alert-danger">Error</div>');
+                });
+
+            });
+        });
+    </script>
+
+</body>
+
+</html>
